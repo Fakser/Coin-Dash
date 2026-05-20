@@ -1,1 +1,1 @@
-GODOT study project from "Godot Engine Game Development Projects" by Cris Bradfield.
+GODOT study project from "Godot Engine Game Development Projects" by Chris Bradfield.
