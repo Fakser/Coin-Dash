@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://b33qs71e4talv"]
+
+[ext_resource type="FontFile" uid="uid://d0k3tml2b52ww" path="res://assets/Kenney Bold.ttf" id="1_6xhvv"]
+[ext_resource type="Script" uid="uid://rm033gnnlnri" path="res://src/hud.gd" id="1_cxk63"]
+
+[node name="HUD" type="CanvasLayer" unique_id=411540700]
+script = ExtResource("1_cxk63")
+
+[node name="MessageLabel" type="Label" parent="." unique_id=961948786]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_6xhvv")
+theme_override_font_sizes/font_size = 48
+text = "GAME OVER"
+
+[node name="ButtonMarginContainer" type="MarginContainer" parent="." unique_id=1636282779]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -280.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 50
+
+[node name="StartButton" type="Button" parent="ButtonMarginContainer" unique_id=755947040]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_6xhvv")
+theme_override_font_sizes/font_size = 48
+text = "START"
+
+[node name="MessageTimer" type="Timer" parent="." unique_id=2025939307]
+
+[node name="LabelMarginContainer" type="MarginContainer" parent="." unique_id=552516970]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 72.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="ScoreLabel" type="Label" parent="LabelMarginContainer" unique_id=1027952522]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6xhvv")
+theme_override_font_sizes/font_size = 48
+text = "0"
+
+[node name="TimeLabel" type="Label" parent="LabelMarginContainer" unique_id=806592948]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6xhvv")
+theme_override_font_sizes/font_size = 48
+text = "0"
+horizontal_alignment = 2
+
+[connection signal="pressed" from="ButtonMarginContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]

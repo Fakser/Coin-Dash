@@ -16,7 +16,8 @@ func _ready() -> void:
 	self.screensize = get_viewport().get_visible_rect().size
 	$Player.screensize = screensize
 	$Player.hide()
-	new_game()
+	#$HUD.update_score(self.score)
+	#$HUD.update_time(self.time_left)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -24,6 +25,12 @@ func _process(delta: float) -> void:
 		level += 1
 		time_left += 5
 		spawn_coins()
+
+func _on_game_timer_timeout() -> void:
+	self.time_left -= 1
+	$HUD.update_time(self.time_left)
+	if self.time_left <= 0:
+		game_over()
 
 func new_game():
 	self.playing = true
@@ -35,6 +42,14 @@ func new_game():
 	$GameTimer.start()
 	spawn_coins()
 
+func game_over():
+	playing = false
+	$GameTimer.stop()
+	for child in $CoinContainer.get_children():
+			child.queue_free()
+	$HUD.show_game_over()
+	$Player.die()
+
 func spawn_coins():
 	for i in range(4 + self.level):
 		var c = self.coin.instantiate()
@@ -43,4 +58,8 @@ func spawn_coins():
 			randi_range(0, self.screensize.x),
 			randi_range(0, self.screensize.y))
 		$CoinContainer.add_child(c)
-		
+
+
+func _on_player_pickup() -> void:
+	self.score += 1
+	$HUD.update_score(self.score)
