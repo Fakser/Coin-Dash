@@ -31,7 +31,7 @@ func show_message(text):
 
 func show_game_over():
 	show_message("GAME OVER")
-	await $MessageTimer.timeout()
+	await $MessageTimer.timeout
 	$ButtonMarginContainer.show()
 	$MessageLabel.text = "Coin Dash!"
 	$MessageLabel.show()

@@ -2,6 +2,7 @@ extends Node
 
 @export var player_start_position: Vector2
 @export var coin: PackedScene
+@export var powerup: PackedScene
 @export var playtime: int
 
 var level: int
@@ -16,15 +17,17 @@ func _ready() -> void:
 	self.screensize = get_viewport().get_visible_rect().size
 	$Player.screensize = screensize
 	$Player.hide()
-	#$HUD.update_score(self.score)
-	#$HUD.update_time(self.time_left)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if self.playing and $CoinContainer.get_child_count() == 0:
 		level += 1
 		time_left += 5
+		$AudioStreamPlayer2D.play()
+
 		spawn_coins()
+		$PowerupTimer.wait_time = randi_range(5, 10)
+		$PowerupTimer.start()
 
 func _on_game_timer_timeout() -> void:
 	self.time_left -= 1
@@ -60,6 +63,24 @@ func spawn_coins():
 		$CoinContainer.add_child(c)
 
 
-func _on_player_pickup() -> void:
-	self.score += 1
-	$HUD.update_score(self.score)
+func _on_player_pickup(group: String) -> void:
+	match group:
+		"coins":
+			self.score += 1
+			$HUD.update_score(self.score)
+		"powerups":
+			self.time_left += 5
+			$HUD.update_time(self.time_left)
+
+
+func _on_powerup_timer_timeout() -> void:
+	var p = self.powerup.instantiate()
+	p.screensize = self.screensize
+	p.position = Vector2(
+		randi_range(0, self.screensize.x),
+		randi_range(0, self.screensize.y))
+	self.add_child(p)
+
+
+func _on_player_hurt() -> void:
+	game_over()

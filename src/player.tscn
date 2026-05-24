@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://b1kh70y2w6rtf" path="res://assets/player/run/player-run-4.png" id="11_126wl"]
 [ext_resource type="Texture2D" uid="uid://bgowrpcfsoyws" path="res://assets/player/run/player-run-5.png" id="12_wwu71"]
 [ext_resource type="Texture2D" uid="uid://ts3t7ru2i72x" path="res://assets/player/run/player-run-6.png" id="13_856a1"]
+[ext_resource type="AudioStream" uid="uid://jkc2ncpld3q6" path="res://assets/audio/Hit.wav" id="14_fxwnc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jo1vc"]
 size = Vector2(18, 21)
@@ -72,6 +73,7 @@ animations = [{
 }]
 
 [node name="Player" type="Area2D" unique_id=1403500359]
+scale = Vector2(1.5, 1.5)
 script = ExtResource("1_nic3v")
 speed = 80
 metadata/_edit_group_ = true
@@ -83,5 +85,8 @@ shape = SubResource("RectangleShape2D_jo1vc")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1755551225]
 sprite_frames = SubResource("SpriteFrames_wihxi")
 animation = &"idle"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=753856870]
+stream = ExtResource("14_fxwnc")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

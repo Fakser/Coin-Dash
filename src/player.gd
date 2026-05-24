@@ -29,7 +29,10 @@ func _process(delta: float) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("coins"):
 		area.pickup()
-		emit_signal("pickup")
+		emit_signal("pickup", "coins")
+	elif area.is_in_group("powerups"):
+		area.pickup()
+		emit_signal("pickup", "powerups")
 	if area.is_in_group("obstacles"):
 		emit_signal("hurt")
 		die()
@@ -55,4 +58,5 @@ func start(pos) -> void:
 
 func die() -> void:
 	$AnimatedSprite2D.animation = "hurt"
+	$AudioStreamPlayer2D.play()
 	set_process(false)

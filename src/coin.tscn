@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dx1iogeb0llk4" path="res://assets/coin/coin-frame-9.png" id="9_l8ks4"]
 [ext_resource type="Texture2D" uid="uid://dx4ur0d6t58vv" path="res://assets/coin/coin-frame-10.png" id="10_lkof8"]
 [ext_resource type="Texture2D" uid="uid://sjopua1isj1w" path="res://assets/coin/coin-frame-11.png" id="11_nvdou"]
+[ext_resource type="AudioStream" uid="uid://divnb3tfwfrwd" path="res://assets/audio/Coin.wav" id="13_giai8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_okxd0"]
 animations = [{
@@ -49,7 +50,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_nvdou")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 12.0
 }]
@@ -62,7 +63,16 @@ script = ExtResource("1_3g6ky")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1727427582]
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_okxd0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1650468049]
 shape = SubResource("CircleShape2D_q6bl7")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=591783031]
+stream = ExtResource("13_giai8")
+
+[node name="AnimationTimer" type="Timer" parent="." unique_id=1713174192]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="AnimationTimer" to="." method="_on_animation_timer_timeout"]

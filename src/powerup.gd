@@ -5,8 +5,7 @@ var tween: Tween
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$AnimationTimer.wait_time = randi_range(3, 8)
-	$AnimationTimer.start()
+	$AnimatedSprite2D.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -23,10 +22,8 @@ func pickup():
 	$AudioStreamPlayer2D.play()
 
 
-func _on_animation_timer_timeout() -> void:
-	$AnimatedSprite2D.frame = 0
-	$AnimatedSprite2D.play()
-
+func _on_lifetime_timeout() -> void:
+	queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("obstacles"):
